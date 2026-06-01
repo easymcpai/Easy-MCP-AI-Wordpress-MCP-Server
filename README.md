@@ -1,0 +1,1 @@
+# Easy-MCP-AI-for-Wordpress
