@@ -68,7 +68,7 @@ Install the plugin, generate a token, paste your endpoint URL into your AI clien
 After activation, go to **Easy MCP AI → Dashboard** in your WordPress admin. Your MCP endpoint is shown there:
 
 ```
-https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp
+https://${WP_SITE_URL}/wp-json/easy-mcp-ai/v1/mcp
 ```
 
 ### Step 2 — Choose a Connection Method
@@ -123,9 +123,9 @@ Or add manually to `claude_desktop_config.json` (see `config/claude-desktop.json
       "command": "npx",
       "args": [
         "mcp-remote",
-        "https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp",
+        "https://${WP_SITE_URL}/wp-json/easy-mcp-ai/v1/mcp",
         "--header",
-        "Authorization: Bearer wpmcp_your_token_here"
+        "Authorization: Bearer ${WP_API_TOKEN}"
       ]
     }
   }
@@ -141,9 +141,9 @@ Add to your `.claude/settings.json`:
   "mcpServers": {
     "wordpress": {
       "type": "http",
-      "url": "https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp",
+      "url": "https://${WP_SITE_URL}/wp-json/easy-mcp-ai/v1/mcp",
       "headers": {
-        "Authorization": "Bearer wpmcp_your_token_here"
+        "Authorization": "Bearer ${WP_API_TOKEN}"
       }
     }
   }
@@ -152,8 +152,8 @@ Add to your `.claude/settings.json`:
 
 Or from the terminal:
 ```bash
-claude mcp add --transport http wordpress https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp \
-  --header "Authorization: Bearer wpmcp_your_token_here"
+claude mcp add --transport http wordpress https://${WP_SITE_URL}/wp-json/easy-mcp-ai/v1/mcp \
+  --header "Authorization: Bearer ${WP_API_TOKEN}"
 ```
 
 ### Cursor
@@ -164,9 +164,9 @@ Add to `~/.cursor/mcp.json` (see `config/cursor.json`):
 {
   "mcpServers": {
     "wordpress": {
-      "url": "https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp",
+      "url": "https://${WP_SITE_URL}/wp-json/easy-mcp-ai/v1/mcp",
       "headers": {
-        "Authorization": "Bearer wpmcp_your_token_here"
+        "Authorization": "Bearer ${WP_API_TOKEN}"
       }
     }
   }
@@ -183,9 +183,9 @@ Add to `~/.codeium/windsurf/mcp_config.json` (see `config/windsurf.json`):
 {
   "mcpServers": {
     "wordpress": {
-      "serverUrl": "https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp",
+      "serverUrl": "https://${WP_SITE_URL}/wp-json/easy-mcp-ai/v1/mcp",
       "headers": {
-        "Authorization": "Bearer wpmcp_your_token_here"
+        "Authorization": "Bearer ${WP_API_TOKEN}"
       }
     }
   }
@@ -203,9 +203,9 @@ Add via **Cline → MCP Servers → Add Server** or edit `cline_mcp_settings.jso
       "autoApprove": [],
       "disabled": false,
       "transportType": "streamableHttp",
-      "url": "https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp",
+      "url": "https://${WP_SITE_URL}/wp-json/easy-mcp-ai/v1/mcp",
       "headers": {
-        "Authorization": "Bearer wpmcp_your_token_here"
+        "Authorization": "Bearer ${WP_API_TOKEN}"
       }
     }
   }
@@ -220,7 +220,7 @@ Add via **Cline → MCP Servers → Add Server** or edit `cline_mcp_settings.jso
 4. Check **I trust this application** and click **Create**.
 5. Complete the OAuth login flow — no token needed.
 
-Or embed a token directly in the URL: `https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp/wpmcp_your_token_here`
+Or embed a token directly in the URL: `https://${WP_SITE_URL}/wp-json/easy-mcp-ai/v1/mcp/${WP_API_TOKEN}`
 
 > Requires Pro, Plus, Business, Enterprise, or Education plan.
 
@@ -233,9 +233,9 @@ Add to `~/.gemini/settings.json`:
   "mcpServers": {
     "wordpress": {
       "type": "http",
-      "url": "https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp",
+      "url": "https://${WP_SITE_URL}/wp-json/easy-mcp-ai/v1/mcp",
       "headers": {
-        "Authorization": "Bearer wpmcp_your_token_here"
+        "Authorization": "Bearer ${WP_API_TOKEN}"
       }
     }
   }
@@ -244,17 +244,17 @@ Add to `~/.gemini/settings.json`:
 
 Or from the terminal:
 ```bash
-gemini mcp add wordpress https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp \
+gemini mcp add wordpress https://${WP_SITE_URL}/wp-json/easy-mcp-ai/v1/mcp \
   --transport http --scope user \
-  -H "Authorization: Bearer wpmcp_your_token_here"
+  -H "Authorization: Bearer ${WP_API_TOKEN}"
 ```
 
 ### n8n
 
 1. Add an **MCP Client** node to your workflow.
 2. Set **Transport** to `Streamable HTTP`.
-3. Set **URL** to `https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp`.
-4. Add a **Header Auth** credential: name `Authorization`, value `Bearer wpmcp_your_token_here`.
+3. Set **URL** to `https://${WP_SITE_URL}/wp-json/easy-mcp-ai/v1/mcp`.
+4. Add a **Header Auth** credential: name `Authorization`, value `Bearer ${WP_API_TOKEN}`.
 
 ### Manus
 
@@ -264,9 +264,9 @@ Go to **Connectors → Custom MCP** and fill in the form:
 |---|---|
 | Server Name | WordPress |
 | Transport Type | HTTP |
-| Server URL | `https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp` |
+| Server URL | `https://${WP_SITE_URL}/wp-json/easy-mcp-ai/v1/mcp` |
 | Header name | `Authorization` |
-| Header value | `Bearer wpmcp_your_token_here` |
+| Header value | `Bearer ${WP_API_TOKEN}` |
 
 ---
 

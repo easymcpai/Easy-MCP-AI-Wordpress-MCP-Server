@@ -4,9 +4,9 @@
       "command": "npx",
       "args": [
         "mcp-remote",
-        "https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp",
+        "https://${WP_SITE_URL}/wp-json/easy-mcp-ai/v1/mcp",
         "--header",
-        "Authorization: Bearer YOUR_API_TOKEN"
+        "Authorization: Bearer ${WP_API_TOKEN}"
       ]
     }
   }
