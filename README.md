@@ -7,6 +7,8 @@
 **License:** GPL-2.0-or-later  
 **Requires:** WordPress 6.0+, PHP 7.4+
 
+[![MCP Badge](https://lobehub.com/badge/mcp/easymcpai-easy-mcp-ai-wordpress-mcp-server)](https://lobehub.com/mcp/easymcpai-easy-mcp-ai-wordpress-mcp-server)
+
 ---
 
 > **This is the setup and integration documentation only.**
