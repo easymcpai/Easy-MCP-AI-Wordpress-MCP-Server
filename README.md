@@ -14,6 +14,29 @@
 
 ---
 
+## Table of Contents
+
+- [What This Is](#what-this-is)
+- [Installation](#installation)
+- [Setup](#setup)
+- [Connecting Clients](#connecting-clients)
+  - [Claude Desktop](#claude-desktop-oauth--recommended)
+  - [Claude Code (CLI)](#claude-code-cli)
+  - [Cursor](#cursor)
+  - [Windsurf](#windsurf)
+  - [Cline / Roo Code](#cline--roo-code)
+  - [ChatGPT (OpenAI)](#chatgpt-openai)
+  - [Gemini CLI](#gemini-cli)
+  - [n8n](#n8n)
+  - [Manus](#manus)
+- [Tools (214)](#tools-214)
+- [Resources](#resources-16)
+- [Skills](#skills)
+- [Security](#security)
+- [License](#license)
+
+---
+
 ## What This Is
 
 Easy MCP AI exposes your WordPress site as a **remote MCP server** over HTTPS. Any MCP-compatible AI client — assistant or autonomous agent — connects directly to your site and gets scoped, capability-checked access to content, media, users, SEO data, analytics, and WooCommerce — all over the Model Context Protocol.
@@ -40,25 +63,38 @@ Install the plugin, generate a token, paste your endpoint URL into your AI clien
 
 ## Setup
 
-### Step 1 — Generate a Token (all clients)
+### Step 1 — Find Your Endpoint URL
 
-After activation, go to **Easy MCP AI → API Tokens** in your WordPress admin:
-
-1. Click **Create New Token**.
-2. Set a name (e.g. `Claude Code — My Mac`).
-3. Choose the WordPress user whose capabilities the token inherits (Administrator = full access).
-4. Leave **Allowed Tools** blank for all tools, or select specific tools to restrict access.
-5. Click **Create Token** and copy the value — it starts with `wpmcp_` and is shown only once.
-
-### Step 2 — Find Your Endpoint URL
-
-Your MCP endpoint is:
+After activation, go to **Easy MCP AI → Dashboard** in your WordPress admin. Your MCP endpoint is shown there:
 
 ```
 https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp
 ```
 
-Replace `yoursite.com` with your actual WordPress domain.
+### Step 2 — Choose a Connection Method
+
+**Path A — OAuth (Recommended)**
+
+Use this if your AI client supports OAuth (Claude Desktop, Claude.ai, Cursor, ChatGPT, Google Antigravity). No token needed.
+
+1. Copy your endpoint URL from the Dashboard.
+2. Open your AI client's MCP settings and paste the URL.
+3. The client will redirect you to your WordPress site's OAuth consent screen.
+4. Log in to WordPress, review the permission scopes, click **Approve**.
+5. Done — the client receives a short-lived token that refreshes automatically.
+
+Manage or revoke connected clients anytime under **Easy MCP AI → API Tokens & OAuth → OAuth** tab.
+
+**Path B — Manual Token (Bearer)**
+
+Use this if your client does not support OAuth (Claude Code CLI, Windsurf, Cline, Roo Code, n8n, Gemini CLI, Manus).
+
+1. Go to **Easy MCP AI → API Tokens** in your WordPress admin.
+2. Click **Create New Token**.
+3. Set a name (e.g. `Cursor — My Mac`).
+4. Choose the WordPress user whose capabilities the token inherits (Administrator = full access).
+5. Leave **Allowed Tools** blank for all tools, or select specific tools to restrict access.
+6. Click **Create Token** and copy the value — it starts with `wpmcp_` and is shown only once.
 
 ### Step 3 — Connect Your AI Client
 
@@ -72,11 +108,11 @@ See the [Connecting Clients](#connecting-clients) section below and the `config/
 
 Claude Desktop supports OAuth 2.1 one-click connection. No token needed.
 
-1. Open Claude Desktop → **Settings → Integrations → Add MCP Server**.
-2. Paste your endpoint URL: `https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp`
-3. Claude Desktop will open your WordPress site's OAuth consent screen.
-4. Log in to WordPress, review the permission scopes, click **Approve**.
-5. Done — Claude Desktop receives a short-lived access token that auto-refreshes.
+1. Go to **Settings → Connectors**.
+2. Click **Add connector**.
+3. Paste your MCP endpoint URL as the server URL.
+4. Set the name to `WordPress` (or anything you like).
+5. Click **Save** then **Connect** — OAuth is handled automatically, no token needed.
 
 Or add manually to `claude_desktop_config.json` (see `config/claude-desktop.json`):
 
@@ -122,11 +158,7 @@ claude mcp add --transport http wordpress https://yoursite.com/wp-json/easy-mcp-
 
 ### Cursor
 
-1. Open Cursor → **Settings → MCP**.
-2. Click **Add MCP Server**.
-3. Paste your endpoint URL and add the Authorization header.
-
-Or add to `~/.cursor/mcp.json` (see `config/cursor.json`):
+Add to `~/.cursor/mcp.json` (see `config/cursor.json`):
 
 ```json
 {
@@ -235,24 +267,6 @@ Go to **Connectors → Custom MCP** and fill in the form:
 | Server URL | `https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp` |
 | Header name | `Authorization` |
 | Header value | `Bearer wpmcp_your_token_here` |
-
----
-
-## Supported Clients Summary
-
-| Client | OAuth | Token | Notes |
-|---|---|---|---|
-| Claude Desktop | ✅ One-click | ✅ | Recommended: use OAuth |
-| Claude Code (CLI) | ✅ | ✅ | OAuth or token via header / `claude mcp add` |
-| Cursor | ✅ | ✅ | Both methods work |
-| Windsurf | — | ✅ | |
-| Cline | — | ✅ | |
-| Roo Code | — | ✅ | |
-| ChatGPT (OpenAI) | ✅ | ✅ | Developer Mode required |
-| Gemini CLI | — | ✅ | |
-| n8n | — | ✅ | MCP Client node |
-| Manus | — | ✅ | |
-| Any MCP client | varies | ✅ | Supports MCP spec 2025-11-25 |
 
 ---
 
