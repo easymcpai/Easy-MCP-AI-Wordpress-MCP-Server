@@ -84,8 +84,13 @@ Or add manually to `claude_desktop_config.json` (see `config/claude-desktop.json
 {
   "mcpServers": {
     "wordpress": {
-      "type": "streamable-http",
-      "url": "https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp"
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp",
+        "--header",
+        "Authorization: Bearer wpmcp_your_token_here"
+      ]
     }
   }
 }
@@ -93,13 +98,13 @@ Or add manually to `claude_desktop_config.json` (see `config/claude-desktop.json
 
 ### Claude Code (CLI)
 
-Add to your `.claude/settings.json` or run interactively:
+Add to your `.claude/settings.json`:
 
 ```json
 {
   "mcpServers": {
     "wordpress": {
-      "type": "streamable-http",
+      "type": "http",
       "url": "https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp",
       "headers": {
         "Authorization": "Bearer wpmcp_your_token_here"
@@ -111,8 +116,7 @@ Add to your `.claude/settings.json` or run interactively:
 
 Or from the terminal:
 ```bash
-claude mcp add wordpress --transport streamable-http \
-  --url https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp \
+claude mcp add --transport http wordpress https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp \
   --header "Authorization: Bearer wpmcp_your_token_here"
 ```
 
@@ -128,7 +132,6 @@ Or add to `~/.cursor/mcp.json` (see `config/cursor.json`):
 {
   "mcpServers": {
     "wordpress": {
-      "type": "streamable-http",
       "url": "https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp",
       "headers": {
         "Authorization": "Bearer wpmcp_your_token_here"
@@ -148,8 +151,7 @@ Add to `~/.codeium/windsurf/mcp_config.json` (see `config/windsurf.json`):
 {
   "mcpServers": {
     "wordpress": {
-      "type": "streamable-http",
-      "url": "https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp",
+      "serverUrl": "https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp",
       "headers": {
         "Authorization": "Bearer wpmcp_your_token_here"
       }
@@ -166,7 +168,9 @@ Add via **Cline → MCP Servers → Add Server** or edit `cline_mcp_settings.jso
 {
   "mcpServers": {
     "wordpress": {
-      "type": "streamable-http",
+      "autoApprove": [],
+      "disabled": false,
+      "transportType": "streamableHttp",
       "url": "https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp",
       "headers": {
         "Authorization": "Bearer wpmcp_your_token_here"
@@ -178,19 +182,25 @@ Add via **Cline → MCP Servers → Add Server** or edit `cline_mcp_settings.jso
 
 ### ChatGPT (OpenAI)
 
-In ChatGPT → **Settings → Connectors → Add MCP Server**:
-- **URL:** `https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp`
-- **Authentication:** Bearer token → paste your `wpmcp_...` token.
+1. Go to **Settings → Apps → Advanced settings** and enable **Developer Mode**.
+2. Go to **Create apps**, enter a name (e.g. `WordPress`), and paste your MCP endpoint URL.
+3. Select **OAuth** as the authentication method.
+4. Check **I trust this application** and click **Create**.
+5. Complete the OAuth login flow — no token needed.
+
+Or embed a token directly in the URL: `https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp/wpmcp_your_token_here`
+
+> Requires Pro, Plus, Business, Enterprise, or Education plan.
 
 ### Gemini CLI
 
-Add to your Gemini CLI config:
+Add to `~/.gemini/settings.json`:
 
 ```json
 {
   "mcpServers": {
     "wordpress": {
-      "type": "streamable-http",
+      "type": "http",
       "url": "https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp",
       "headers": {
         "Authorization": "Bearer wpmcp_your_token_here"
@@ -198,6 +208,13 @@ Add to your Gemini CLI config:
     }
   }
 }
+```
+
+Or from the terminal:
+```bash
+gemini mcp add wordpress https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp \
+  --transport http --scope user \
+  -H "Authorization: Bearer wpmcp_your_token_here"
 ```
 
 ### n8n
@@ -209,9 +226,15 @@ Add to your Gemini CLI config:
 
 ### Manus
 
-In Manus agent settings, add the MCP endpoint as a tool source:
-- **URL:** `https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp`
-- **Auth:** Bearer token.
+Go to **Connectors → Custom MCP** and fill in the form:
+
+| Field | Value |
+|---|---|
+| Server Name | WordPress |
+| Transport Type | HTTP |
+| Server URL | `https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp` |
+| Header name | `Authorization` |
+| Header value | `Bearer wpmcp_your_token_here` |
 
 ---
 
@@ -225,7 +248,7 @@ In Manus agent settings, add the MCP endpoint as a tool source:
 | Windsurf | — | ✅ | |
 | Cline | — | ✅ | |
 | Roo Code | — | ✅ | |
-| ChatGPT (OpenAI) | — | ✅ | |
+| ChatGPT (OpenAI) | ✅ | ✅ | Developer Mode required |
 | Gemini CLI | — | ✅ | |
 | n8n | — | ✅ | MCP Client node |
 | Manus | — | ✅ | |

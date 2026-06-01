@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "wordpress": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://yoursite.com/wp-json/easy-mcp-ai/v1/mcp",
+        "--header",
+        "Authorization: Bearer YOUR_API_TOKEN"
+      ]
+    }
+  }
+}
